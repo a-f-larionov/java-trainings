@@ -6,25 +6,25 @@ import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatException;
 
-public class Beans {
+public class BeanConfigSetupInstantiate {
 
     @Test
     public void noUniqueBeanName() {
         // given
-        var configName = "beans/no-unique-bean-name.xml";
+        var configLocation = "beans/no-unique-bean-name.xml";
 
         // when
-        ThrowingCallable runnable = () -> new ClassPathXmlApplicationContext(configName);
+        ThrowingCallable runnable = () -> new ClassPathXmlApplicationContext(configLocation);
 
         // then
         assertThatException()
                 .isThrownBy(runnable)
                 .isInstanceOf(BeanDefinitionStoreException.class)
                 .withMessage("Configuration problem: Bean name 'beanName1' is already used in this <beans> element\n" +
-                        "Offending resource: class path resource [beans/no-unique-bean-name.xml]");
+                        "Offending resource: class path resource [" + configLocation + "]" +
+                        "\n");
     }
 
     @Test
