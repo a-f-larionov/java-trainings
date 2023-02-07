@@ -24,6 +24,5 @@ public class PreDefinedBeansTest {
         assertThat(bean.getApplicationContext()).isSameAs(cnxt);
         assertThat(bean.getEnvironment()).isInstanceOf(Environment.class);
         assertThat(bean.getBeanFactory()).isInstanceOf(BeanFactory.class);
-        // assertThat(bean.getLifecycleProcessor()).isInstanceOf(LifecycleProcessor.class);
     }
 }
