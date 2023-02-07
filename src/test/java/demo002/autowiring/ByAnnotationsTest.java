@@ -64,7 +64,7 @@ public class ByAnnotationsTest {
                 .havingCause()
                 .isInstanceOf(NoUniqueBeanDefinitionException.class)
                 .withMessage("No qualifying bean of type '" + BeanChildInterface.class.getName() + "' available: " +
-                        "expected single matching bean but found 2: " + candidatesToSTring(",", BeanChildA.class, BeanChildB.class));
+                        "expected single matching bean but found 2: " + candidatesToString(",", BeanChildA.class, BeanChildB.class));
         cntx.close();
     }
 
@@ -99,7 +99,7 @@ public class ByAnnotationsTest {
                 .isInstanceOf(NoUniqueBeanDefinitionException.class)
                 .withMessage("No qualifying bean of type '" + BeanChildInterface.class.getName() + "' available: " +
                         "more than one 'primary' bean found among candidates: [" +
-                        candidatesToSTring(", ", BeanChildAPrimary.class, BeanChildBPrimary.class, BeanChildC.class)
+                        candidatesToString(", ", BeanChildAPrimary.class, BeanChildBPrimary.class, BeanChildC.class)
                         + "]");
         cntx.close();
     }
@@ -214,7 +214,7 @@ public class ByAnnotationsTest {
                 .getBeanChild();
     }
 
-    private String candidatesToSTring(String delimiter, Class<?>... candidates) {
+    private String candidatesToString(String delimiter, Class<?>... candidates) {
         return stream(candidates)
                 .map(this::getBeanName)
                 .collect(Collectors.joining(delimiter));
