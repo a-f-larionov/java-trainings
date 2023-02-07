@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ByBeanDefinitionTest {
 
     private GenericApplicationContext cntx;
-    private GenericBeanDefinition parentBean;
+    private GenericBeanDefinition beanParent;
 
     @Test
     public void justManualCreateClass() {
@@ -38,7 +38,7 @@ public class ByBeanDefinitionTest {
     public void autowireModeConstructor() {
         // given
         createCntxWithParentAndChild();
-        parentBean.setAutowireMode(AutowireCapableBeanFactory.AUTOWIRE_CONSTRUCTOR);
+        beanParent.setAutowireMode(AutowireCapableBeanFactory.AUTOWIRE_CONSTRUCTOR);
 
         // when - then
         assertDependsBeansWired(cntx, false, true, false, false, false);
@@ -48,7 +48,7 @@ public class ByBeanDefinitionTest {
     public void autowireModeByType() {
         // given
         createCntxWithParentAndChild();
-        parentBean.setAutowireMode(AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE);
+        beanParent.setAutowireMode(AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE);
 
         // when - then
         assertDependsBeansWired(cntx, false, false, true, true, true);
@@ -58,7 +58,7 @@ public class ByBeanDefinitionTest {
     public void autowireModeByName() {
         // given
         createCntxWithParentAndChild();
-        parentBean.setAutowireMode(AutowireCapableBeanFactory.AUTOWIRE_BY_NAME);
+        beanParent.setAutowireMode(AutowireCapableBeanFactory.AUTOWIRE_BY_NAME);
 
         var beanDefinition = new GenericBeanDefinition();
         beanDefinition.setBeanClass(BeanChild.class);
@@ -72,12 +72,31 @@ public class ByBeanDefinitionTest {
     public void autowireByProperty() {
         // given
         createCntxWithParentAndChild();
-        parentBean.getPropertyValues().add(
+        beanParent.getPropertyValues().add(
                 "beanByPropertyValues",
-                new RuntimeBeanReference("childBean"));
+                new RuntimeBeanReference("beanChild"));
 
         // when - then
         assertDependsBeansWired(cntx, false, false, false, true, false);
+    }
+
+    @Test
+    public void excludeAutowireCandidateFalse() {
+        // given
+        createCntxWithParentAndChild();
+        beanParent.setAutowireMode(AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE);
+
+        var beanDefinition = new GenericBeanDefinition();
+        beanDefinition.setBeanClass(BeanChild.class);
+        beanDefinition.setAutowireCandidate(false);
+        cntx.registerBeanDefinition("beanChild2", beanDefinition);
+
+        // when - then
+        cntx.refresh();
+
+        assertThat(cntx.getBean("beanParent", BeanParent.class)
+                .getBeanByType())
+                .isInstanceOf(BeanChild.class);
     }
 
     @Test
@@ -93,24 +112,24 @@ public class ByBeanDefinitionTest {
     }
 
 
-    private GenericBeanDefinition addParentBean(GenericApplicationContext cntx) {
+    private GenericBeanDefinition addBeanParent(GenericApplicationContext cntx) {
         var bd = new GenericBeanDefinition();
         bd.setBeanClass(BeanParent.class);
-        cntx.registerBeanDefinition("parentBean", bd);
+        cntx.registerBeanDefinition("beanParent", bd);
         return bd;
     }
 
-    private void addChildBean(GenericApplicationContext cntx) {
+    private void addBeanChild(GenericApplicationContext cntx) {
         var bd = new GenericBeanDefinition();
         bd.setBeanClass(BeanChild.class);
-        cntx.registerBeanDefinition("childBean", bd);
+        cntx.registerBeanDefinition("beanChild", bd);
     }
 
     private void assertDependsBeansWired(GenericApplicationContext cntx,
                                          boolean byAnnotation,
                                          boolean byConstructor, boolean byType, boolean byPropertyValues, boolean byName) {
         cntx.refresh();
-        assertDependsBeansWired(cntx.getBean("parentBean", BeanParent.class),
+        assertDependsBeansWired(cntx.getBean("beanParent", BeanParent.class),
                 byAnnotation, byConstructor, byType, byPropertyValues, byName
         );
     }
@@ -147,7 +166,7 @@ public class ByBeanDefinitionTest {
 
     private void createCntxWithParentAndChild() {
         cntx = new GenericApplicationContext();
-        parentBean = addParentBean(cntx);
-        addChildBean(cntx);
+        beanParent = addBeanParent(cntx);
+        addBeanChild(cntx);
     }
 }

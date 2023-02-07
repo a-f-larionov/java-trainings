@@ -5,5 +5,5 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Profile("no-profiles")
-public class BeanChildANoProfiles implements BeanChildInterface {
+public class BeanChildWithProfileValue implements BeanChildInterface {
 }

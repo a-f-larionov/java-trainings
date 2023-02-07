@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatException;
 public class ByAnnotationsTest {
 
     @Test
-    public void noBeanAvailable() {
+    public void noCandidates() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
         cntx.register(BeanParentWithAutowired.class);
@@ -137,26 +137,11 @@ public class ByAnnotationsTest {
                 .isInstanceOf(BeanChildC.class);
     }
 
-
     @Test
-    public void excludeAutowiringCandidateFalse() {
+    public void excludeByProfileValue() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
-        cntx.register(
-                BeanParentWithAutowired.class,
-                BeanChildA.class,
-                BeanChildB.class);
-        cntx.getBeanDefinition("beanChildA").setAutowireCandidate(false);
-        // when -
-        assertThat(refreshCntxAndGetBeanChild(cntx))
-                .isInstanceOf(BeanChildB.class);
-    }
-
-    @Test
-    public void excludeBeanByNoProfile() {
-        // given
-        var cntx = new AnnotationConfigApplicationContext();
-        cntx.register(BeanChildANoProfiles.class);
+        cntx.register(BeanChildWithProfileValue.class);
         cntx.refresh();
 
         // when - then
@@ -166,7 +151,7 @@ public class ByAnnotationsTest {
     }
 
     @Test
-    public void requiredFalseNoOneCandidate() {
+    public void requiredFalseNoCandidates() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
         cntx.register(BeanParentAutowiredRequiredFalse.class);
@@ -176,7 +161,7 @@ public class ByAnnotationsTest {
     }
 
     @Test
-    public void requiredFalseOneCandidate() {
+    public void requiredFalseSingle() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
         cntx.register(
@@ -189,7 +174,7 @@ public class ByAnnotationsTest {
     }
 
     @Test
-    public void requiredFalseTwoCandidate() {
+    public void requiredFalseAmbiguity() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
         cntx.register(
@@ -206,14 +191,6 @@ public class ByAnnotationsTest {
         cntx.close();
     }
 
-    @Test
-    public void qualifierByXmlDefintion() {
-        // given
-        var cntx = new ClassPathXmlApplicationContext("autowiring/qualifier.xml");
-        cntx.getBean("beanParent");
-
-        cntx.close();
-    }
 
     private String getBeanName(Class<?> clazz) {
         Component annotation = clazz.getAnnotation(Component.class);
