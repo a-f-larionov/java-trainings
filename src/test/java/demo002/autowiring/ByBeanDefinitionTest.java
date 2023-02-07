@@ -26,7 +26,7 @@ public class ByBeanDefinitionTest {
     }
 
     @Test
-    public void autowiringNothing() {
+    public void autowireDefault() {
         // given
         createCntxWithParentAndChild();
 

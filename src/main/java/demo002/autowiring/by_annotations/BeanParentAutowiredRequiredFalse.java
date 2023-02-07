@@ -9,5 +9,5 @@ import org.springframework.stereotype.Component;
 public class BeanParentAutowiredRequiredFalse implements BeanParentInterface {
 
     @Autowired(required = false)
-    public BeanChildInterface beanChild;
+    private BeanChildInterface beanChild;
 }

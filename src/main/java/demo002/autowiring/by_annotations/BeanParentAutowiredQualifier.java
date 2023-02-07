@@ -11,5 +11,9 @@ public class BeanParentAutowiredQualifier implements BeanParentInterface {
 
     @Autowired
     @Qualifier("qualifierValue")
-    public BeanChildInterface beanChild;
+    private BeanChildInterface beanChild;
+
+    public void setBeanChild(BeanChildInterface beanChild) {
+        this.beanChild = beanChild;
+    }
 }

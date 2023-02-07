@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
 import org.springframework.beans.factory.UnsatisfiedDependencyException;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatException;
 public class ByAnnotationsTest {
 
     @Test
-    public void noChilds() {
+    public void noBeanAvailable() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
         cntx.register(BeanParentWithAutowired.class);
@@ -35,7 +36,7 @@ public class ByAnnotationsTest {
     }
 
     @Test
-    public void oneChild() {
+    public void resolveSingle() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
         cntx.register(
@@ -48,7 +49,7 @@ public class ByAnnotationsTest {
     }
 
     @Test
-    public void twoAmbiguityBeans() {
+    public void resolveTwoAmbiguityBeans() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
         cntx.register(
@@ -69,7 +70,7 @@ public class ByAnnotationsTest {
     }
 
     @Test
-    public void twoAmbiguityButPrimary() {
+    public void resolveTwoAmbiguityButPrimary() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
         cntx.register(
@@ -81,7 +82,7 @@ public class ByAnnotationsTest {
     }
 
     @Test
-    public void threeAmbiguityAndDoublePrimary() {
+    public void resolveThreeAmbiguityAndDoublePrimary() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
         cntx.register(
@@ -105,7 +106,7 @@ public class ByAnnotationsTest {
     }
 
     @Test
-    public void autowireAmbiguiteResolveByPropertyName() {
+    public void resolveAmbiguityByQualifierName() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
         cntx.register(
@@ -119,9 +120,23 @@ public class ByAnnotationsTest {
     }
 
     @Test
-    public void childAQualifier() {
+    public void resolveByPropNameEqualsBeanNameWithAmbiguity() {
+        // given
+        var cntx = new AnnotationConfigApplicationContext();
+        cntx.register(
+                BeanParentWithAutowired.class,
+                BeanChildA.class,
+                BeanChildB.class
+        );
+        var bd = new GenericBeanDefinition();
+        bd.setBeanClass(BeanChildC.class);
+        cntx.registerBeanDefinition("beanChild", bd);
 
+        // when - then
+        assertThat(refreshCntxAndGetBeanChild(cntx))
+                .isInstanceOf(BeanChildC.class);
     }
+
 
     @Test
     public void excludeAutowiringCandidateFalse() {
