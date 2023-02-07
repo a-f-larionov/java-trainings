@@ -7,7 +7,6 @@ import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
 import org.springframework.beans.factory.UnsatisfiedDependencyException;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
@@ -151,7 +150,7 @@ public class ByAnnotationsTest {
     }
 
     @Test
-    public void requiredFalseNoCandidates() {
+    public void skipRequiredFalseNoCandidates() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
         cntx.register(BeanParentAutowiredRequiredFalse.class);
@@ -161,7 +160,7 @@ public class ByAnnotationsTest {
     }
 
     @Test
-    public void requiredFalseSingle() {
+    public void skipRrequiredFalseSingle() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
         cntx.register(
@@ -174,7 +173,7 @@ public class ByAnnotationsTest {
     }
 
     @Test
-    public void requiredFalseAmbiguity() {
+    public void skipRequiredFalseAmbiguity() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
         cntx.register(
@@ -191,6 +190,15 @@ public class ByAnnotationsTest {
         cntx.close();
     }
 
+    @Test
+    public void skipByNullable() {
+        // given
+        var cntx = new AnnotationConfigApplicationContext();
+        cntx.register(BeanParentWithAutowiredNullable.class);
+        // when - then
+        assertThat(refreshCntxAndGetBeanChild(cntx))
+                .isNull();
+    }
 
     private String getBeanName(Class<?> clazz) {
         Component annotation = clazz.getAnnotation(Component.class);
