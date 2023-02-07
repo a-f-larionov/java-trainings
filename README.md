@@ -10,4 +10,4 @@ Corresponding [docs.spring.io](https://docs.spring.io/spring-framework/docs/curr
 
 [1.9.1 Using @Autowired](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-autowired-annotation)
 
-[Autowiring](https://github.com/a-f-larionov/spring-trainings/tree/main/src/test/java/demo002/autowiring)
+[Auto wiring](https://github.com/a-f-larionov/spring-trainings/tree/main/src/test/java/demo002/autowiring)
