@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id="beanA" class="demo002.dependencies.circular.self.by_constructor.BeanA">
+    <bean id="beanA" class="learning.dependencies.circular.self.by_constructor.BeanA">
         <constructor-arg name="beanA">
             <ref bean="beanA"/>
         </constructor-arg>
