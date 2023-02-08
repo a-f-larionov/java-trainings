@@ -2,7 +2,7 @@
 
 Java Spring Trainings.<br>
 Individual Java Cheat Sheet.<br>
-[Abstract is here](https://github.com/a-f-larionov/spring-trainings/blob/abstract.pdf)
+[Abstract is here](https://github.com/a-f-larionov/spring-trainings/blob/main/abstract.pdf)
 
 Corresponding [docs.spring.io](https://docs.spring.io/spring-framework/docs/current/reference/html/index.html) reference docs.
 
