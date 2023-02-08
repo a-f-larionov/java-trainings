@@ -1,13 +1,13 @@
-package learning.autowiring.preDestroyAndPostConstructor;
+package learning.customizin_the_nature_of_bean;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
-@Component
 @Getter
-public class BeanWithCallbacks {
+@Component
+public class BeanWithCallbacksAnnotated {
 
     private boolean postConstructCalled = false;
     private boolean preDestroyCalled = false;

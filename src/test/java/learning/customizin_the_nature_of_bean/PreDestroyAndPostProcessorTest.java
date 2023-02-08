@@ -1,6 +1,5 @@
-package learning.preDestryAndPostConstructor;
+package learning.customizin_the_nature_of_bean;
 
-import learning.autowiring.preDestroyAndPostConstructor.BeanWithCallbacks;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -12,11 +11,11 @@ public class PreDestroyAndPostProcessorTest {
     public void postConstructor() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
-        cntx.scan(BeanWithCallbacks.class.getPackageName());
+        cntx.scan(BeanWithCallbacksAnnotated.class.getPackageName());
         cntx.refresh();
 
         // when
-        BeanWithCallbacks bean = cntx.getBean("beanWithCallbacks", BeanWithCallbacks.class);
+        BeanWithCallbacksAnnotated bean = cntx.getBean(BeanWithCallbacksAnnotated.class);
 
         // then
         assertThat(bean.isPostConstructCalled()).isTrue();
@@ -27,11 +26,11 @@ public class PreDestroyAndPostProcessorTest {
     public void preDestroyBeforeClose() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
-        cntx.scan(BeanWithCallbacks.class.getPackageName());
+        cntx.scan(BeanWithCallbacksAnnotated.class.getPackageName());
         cntx.refresh();
 
         // when
-        BeanWithCallbacks bean = cntx.getBean("beanWithCallbacks", BeanWithCallbacks.class);
+        BeanWithCallbacksAnnotated bean = cntx.getBean(BeanWithCallbacksAnnotated.class);
 
         // then
         assertThat(bean.isPreDestroyCalled()).isFalse();
@@ -42,11 +41,11 @@ public class PreDestroyAndPostProcessorTest {
     public void preDestroyAfterClose() {
         // given
         var cntx = new AnnotationConfigApplicationContext();
-        cntx.scan(BeanWithCallbacks.class.getPackageName());
+        cntx.scan(BeanWithCallbacksAnnotated.class.getPackageName());
         cntx.refresh();
 
         // when
-        BeanWithCallbacks bean = cntx.getBean("beanWithCallbacks", BeanWithCallbacks.class);
+        BeanWithCallbacksAnnotated bean = cntx.getBean(BeanWithCallbacksAnnotated.class);
         cntx.close();
 
         // then
