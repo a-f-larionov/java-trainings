@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,8 +37,9 @@ public class ObjectClassMethodsTest {
         assertThat(methodsMapToNames(methods))
                 .hasSameElementsAs(List.of(
                         "wait", "notify", "notifyAll",
-                        "hashCode", "equals", "toString", "getClass"
-                        , "clone", "finalize"))
+                        "hashCode", "equals",
+                        "toString", "getClass",
+                        "clone", "finalize"))
         ;
     }
 
@@ -79,6 +81,30 @@ public class ObjectClassMethodsTest {
         // then
         assertThat(stringed)
                 .isEqualTo(className + "@" + hexedHashCode);
+    }
+
+    @Test
+    public void nativeMethods() {
+        // given
+        var obj = new Object();
+        var expectedNativeMethods = List.of(
+                "hashCode", "getClass",
+                "clone", "wait", "notify", "notifyAll"
+        );
+
+        // when
+        Method[] declaredMethods = obj.getClass().getDeclaredMethods();
+
+        // then
+        List<String> actualNativeMethods = stream(declaredMethods)
+                .filter(m -> (m.getModifiers() & Modifier.NATIVE) != 0)
+                .map(Method::getName)
+                .toList();
+
+        assertThat(actualNativeMethods)
+                .usingRecursiveComparison()
+                .ignoringCollectionOrder()
+                .isEqualTo(expectedNativeMethods);
     }
 
     static class ObjectToCone extends Object implements Cloneable {
