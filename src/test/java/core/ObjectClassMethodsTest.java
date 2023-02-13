@@ -44,7 +44,7 @@ public class ObjectClassMethodsTest {
     }
 
     @Test
-    public void methodHashCode() {
+    public void identityHashCode() {
         // given
         var obj = new Object();
 
@@ -142,7 +142,7 @@ public class ObjectClassMethodsTest {
     }
 
     @Test
-    public void equals() {
+    public void defaultEqualsRelationships() {
         // given
         var obj1 = new Object();
         var obj2 = new Object();
@@ -150,9 +150,18 @@ public class ObjectClassMethodsTest {
         // when - then
         assertThat(obj1.equals(obj1)).isTrue();
         assertThat(obj1.equals(obj2)).isFalse();
-
     }
 
+    @Test
+    public void defaultHashCodeRelationships() {
+        // given
+        var obj1 = new Object();
+        var obj2 = new Object();
+
+        // when - then
+        assertThat(obj1.hashCode()).isEqualTo(obj1.hashCode());
+        assertThat(obj1.hashCode()).isNotEqualTo(obj2.hashCode());
+    }
 
     private List<String> methodsMapToNames(Method[] methods) {
         return stream(methods)
