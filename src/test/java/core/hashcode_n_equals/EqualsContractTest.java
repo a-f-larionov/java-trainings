@@ -18,7 +18,7 @@ public class EqualsContractTest {
      * @see <a href="https://en.wikipedia.org/wiki/Equivalence_relation">Wikipedia Link</a>
      */
     @Test
-    public void equivalenceRelation() {
+    public void отношенияЭквивалентности() {
         /* дано */
         числа a, b, c;
 
