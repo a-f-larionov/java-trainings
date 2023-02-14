@@ -1,4 +1,4 @@
-package core;
+package core.object;
 
 import org.junit.jupiter.api.Test;
 
