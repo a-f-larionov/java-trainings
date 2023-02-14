@@ -65,6 +65,9 @@ public class EqualsContractTest {
             return false;
         }
 
+        /**
+         * Alias, не делай так :)
+         */
         public boolean равно(Object obj) {
             return equals(obj);
         }
