@@ -20,12 +20,12 @@ public class EqualsContractTest {
     @Test
     public void equivalenceRelation() {
         /* дано */
-        число a, b, c;
+        числа a, b, c;
 
         /* когда */
-        a = пусть(1);
-        b = пусть(1);
-        c = пусть(1);
+        a = равно(1);
+        b = равно(1);
+        c = равно(1);
 
         /* следовательно */
 
@@ -43,14 +43,14 @@ public class EqualsContractTest {
     }
 
 
-    static class число {
+    static class числа {
         private int v;
 
-        public static число пусть(int v) {
-            return new число(v);
+        public static числа пусть(int v) {
+            return new числа(v);
         }
 
-        число(int v) {
+        числа(int v) {
             this.v = v;
         }
 
@@ -60,7 +60,7 @@ public class EqualsContractTest {
             if (obj == null) return false;
             if (obj.getClass() != this.getClass()) return false;
 
-            if (this.v == ((число) obj).v) return true;
+            if (this.v == ((числа) obj).v) return true;
             return false;
         }
 
@@ -75,8 +75,8 @@ public class EqualsContractTest {
     /**
      * Alias, не делай так :)
      */
-    public static число пусть(int v) {
-        return число.пусть(v);
+    public static числа равно(int v) {
+        return числа.пусть(v);
     }
 
     /**
