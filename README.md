@@ -13,7 +13,7 @@ Corresponding [docs.spring.io](https://docs.spring.io/spring-framework/docs/curr
 * [Scopes](https://github.com/a-f-larionov/spring-trainings/tree/main/src/test/java/learning/scopes)
 
 [1.6 Customizing the Nature of a Bean](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-factory-nature)
-* [https://github.com/a-f-larionov/spring-trainings/tree/main/src/test/java/learning/customizin_the_nature_of_bean]
+* [https://github.com/a-f-larionov/spring-trainings/tree/main/src/test/java/spring/customizin_the_nature_of_bean]
 
 [1.9.1 Using @Autowired](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-autowired-annotation)
 * [Auto wiring](https://github.com/a-f-larionov/spring-trainings/tree/main/src/test/java/learning/autowiring)

@@ -4,6 +4,6 @@
        xsi:schemaLocation="
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id="beanA" class="learning.beans.BeanEmpty"/>
-    <bean id="beanB" class="learning.beans.BeanEmpty"/>
+    <bean id="beanA" class="spring.beans.BeanEmpty"/>
+    <bean id="beanB" class="spring.beans.BeanEmpty"/>
 </beans>

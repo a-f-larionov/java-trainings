@@ -10,8 +10,8 @@
 
     <context:annotation-config/>
 
-    <bean id="beanParent" class="learning.autowiring.by_annotations.BeanParentAutowiredQualifier"/>
-    <bean id="beanChild1" class="learning.autowiring.by_annotations.BeanChildA"/>
-    <bean id="qualifierValue" class="learning.autowiring.by_annotations.BeanChildB"/>
+    <bean id="beanParent" class="spring.autowiring.by_annotations.BeanParentAutowiredQualifier"/>
+    <bean id="beanChild1" class="spring.autowiring.by_annotations.BeanChildA"/>
+    <bean id="qualifierValue" class="spring.autowiring.by_annotations.BeanChildB"/>
 
 </beans>

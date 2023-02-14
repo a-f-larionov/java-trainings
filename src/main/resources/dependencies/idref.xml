@@ -3,19 +3,19 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="child" class="learning.beans.BeanChildEmpty"/>
+    <bean id="child" class="spring.beans.BeanChildEmpty"/>
 
-    <bean id="beanA1" class="learning.beans.BeanDependsOnChildEmpty">
+    <bean id="beanA1" class="spring.beans.BeanDependsOnChildEmpty">
         <property name="beanChildEmpty" ref="child"/>
     </bean>
 
-    <bean id="beanA2" class="learning.beans.BeanDependsOnChildEmpty">
+    <bean id="beanA2" class="spring.beans.BeanDependsOnChildEmpty">
         <property name="beanChildEmpty">
             <ref bean="child"/>
         </property>
     </bean>
 
-    <bean id="beanA3" class="learning.beans.BeanDependsOnChildEmpty">
+    <bean id="beanA3" class="spring.beans.BeanDependsOnChildEmpty">
         <property name="beanChildEmptyId">
             <idref bean="child"/>
         </property>

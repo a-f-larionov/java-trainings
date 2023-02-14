@@ -2,12 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id="beanA" class="learning.dependencies.circular.by_setters.BeanA">
+    <bean id="beanA" class="spring.dependencies.circular.by_setters.BeanA">
         <property name="beanB">
             <ref bean="beanB"/>
         </property>
     </bean>
-    <bean id="beanB" class="learning.dependencies.circular.by_setters.BeanB">
+    <bean id="beanB" class="spring.dependencies.circular.by_setters.BeanB">
         <property name="beanA">
             <ref bean="beanA"/>
         </property>
