@@ -42,6 +42,9 @@ public class EqualsContractTest {
         истина(a.равно(c));
     }
 
+    private void compoundDeclarationIsBad(Object args) {
+    }
+
 
     static class числа {
         private int v;
