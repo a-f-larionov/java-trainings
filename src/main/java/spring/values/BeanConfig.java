@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Getter
 @Configuration
-@PropertySource("classpath:app.prop")
+@PropertySource("classpath:my.properties")
 public class BeanConfig {
 
     @Value("just-value")

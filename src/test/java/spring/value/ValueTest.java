@@ -63,8 +63,8 @@ public class ValueTest {
     public void addOwnSource() throws IOException {
         // given
         var cntx = new AnnotationConfigApplicationContext();
-        var resource = cntx.getResource("classpath:app.prop");
-        var source = new ResourcePropertySource("app.prop", resource);
+        var resource = cntx.getResource("classpath:my.properties");
+        var source = new ResourcePropertySource("my.properties", resource);
         var env = cntx.getEnvironment();
         env.getPropertySources().addLast(source);
 
