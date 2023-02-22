@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import static org.mockito.Mockito.*;
 
-public class TryCatchFinallyTest {
+public class TryCatchFinallyWithResourcesTest {
 
     @Test
     public void withResourcesOnly() throws Throwable {

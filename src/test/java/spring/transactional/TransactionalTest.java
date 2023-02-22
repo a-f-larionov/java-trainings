@@ -7,7 +7,7 @@ import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
 @TestPropertySource(properties = "logging.level.root=DEBUG")
-public class TxansactionalTest {
+public class TransactionalTest {
 
     @Autowired
     private MyService myService;
@@ -16,9 +16,9 @@ public class TxansactionalTest {
     public void test1() {
 
         myService.test1();
-        myService.test2();
-        int x = 5;
-        x++;
+//        myService.test2();
+//        int x = 5;
+//        x++;
 
     }
 }
