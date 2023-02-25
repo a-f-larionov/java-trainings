@@ -1,10 +1,13 @@
 package syntax.exceptions;
 
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import static org.assertj.core.api.Assertions.assertThatException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 public class TryCatchFinallyWithResourcesTest {
@@ -26,7 +29,6 @@ public class TryCatchFinallyWithResourcesTest {
         verify(autoCloseable, times(1)).close();
     }
 
-
     @Test
     public void minimalTry() throws Throwable {
         // given
@@ -43,36 +45,44 @@ public class TryCatchFinallyWithResourcesTest {
         } catch (Throwable ignore) {
             // do something
         }
-
-        // variant 3
-        try {
-            // do something
-        } finally {
-            // do something
-        }
     }
 
     @Test
     public void checkedThrowable() throws IOException {
-        throw new IOException("some text");
-        // expected `throws`
+        ThrowingCallable r = () -> {
+            throw new IOException("some text");
+        };
+        assertThatException()
+                .isThrownBy(r)
+                .isInstanceOf(Exception.class);
     }
 
     @Test
     public void uncheckedThrowable() {
-        throw new RuntimeException("Какой то текст");
-        // expected nope `throws`
+        Runnable runnable = () -> {
+            throw new RuntimeException("Какой то текст");
+        };
+        ThrowingCallable throwingCallable = () -> runnable.run();
+
+        assertThatException()
+                .isThrownBy(throwingCallable)
+                .isInstanceOf(RuntimeException.class);
     }
 
     @Test
     public void errorIsUnchecked() {
-        throw new Error("some text");
+        Runnable runnable = () -> {
+            throw new Error("some text");
+        };
+
+        ThrowingCallable throwing = runnable::run;
+
+        assertThatThrownBy(throwing)
+                .isInstanceOf(Error.class);
     }
 
     @Test
-    public void popularThrowables() {
-        var strs = new String[]{"a", "b"};
-        var objs = new Object[]{new Object()};
+    public void popularThrowable() {
 
         var throwables = new Throwable[]{
                 // top - 2

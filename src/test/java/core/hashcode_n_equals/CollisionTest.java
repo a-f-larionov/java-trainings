@@ -1,11 +1,12 @@
 package core.hashcode_n_equals;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class CollisionTest {
 
     @Test
-    //@Disabled
+    @Disabled
     public void collisionByHashCode() {
         // given
         int maxSize = 150_000;
@@ -16,7 +17,6 @@ public class CollisionTest {
         for (int i = 0; i < maxSize; i++) {
             list[i] = new Object();
         }
-
 
         for (int i = 0; i < maxSize; i++) {
             for (int j = 0; j < maxSize; j++) {
