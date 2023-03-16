@@ -76,7 +76,10 @@ public class ValueTest {
 
     @Test
     public void passJustValue() {
+        // given
         var beanConfig = getBeanConfig();
+
+
 
         assertThat(beanConfig.getJustPassValue()).isEqualTo("just-value");
     }

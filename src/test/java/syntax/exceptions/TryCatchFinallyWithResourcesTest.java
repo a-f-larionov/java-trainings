@@ -5,9 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThatException;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class TryCatchFinallyWithResourcesTest {
@@ -103,5 +104,93 @@ public class TryCatchFinallyWithResourcesTest {
                 new InterruptedException(),
                 new FileNotFoundException()
         };
+    }
+
+    @Test
+    public void catchBeforeFinally() {
+        boolean catchDone = false;
+        boolean finallyDone = false;
+
+        try {
+
+            throw new RuntimeException("TryBlock");
+
+        } catch (Throwable t) {
+
+            catchDone = true;
+
+            assertThat(catchDone).isTrue();
+            assertThat(finallyDone).isFalse();
+
+        } finally {
+
+            finallyDone = true;
+
+            assertThat(catchDone).isTrue();
+            assertThat(finallyDone).isTrue();
+        }
+
+        assertThat(catchDone).isTrue();
+        assertThat(finallyDone).isTrue();
+    }
+
+
+    static class MyRuntimeException extends RuntimeException {
+
+        public MyRuntimeException(String deep_try_block) {
+            super(deep_try_block);
+        }
+
+        public MyRuntimeException(String deep_catch_block, Throwable t) {
+            super(deep_catch_block, t);
+        }
+    }
+
+    @Test
+    public void catchThrows() {
+
+        var sequense = new LinkedList<String>();
+
+        try {
+            sequense.add("top try");
+            try {
+                sequense.add("deep try");
+
+                throw new MyRuntimeException("Deep Try Block");
+
+            } catch (MyRuntimeException t) {
+                sequense.add("deep catch");
+
+                assertThat(t).hasMessage("Deep Try Block").hasNoCause();
+
+                sequense.add("deep catch after assert");
+
+                // this exception
+                throw new MyRuntimeException("Deep Catch Block", t);
+
+            } finally {
+                sequense.add("deep finally");
+
+                throw new MyRuntimeException("Deep Finally Block");
+            }
+        } catch (MyRuntimeException t) {
+            sequense.add("top catch");
+
+            assertThat(t).hasMessage("Deep Finally Block").hasNoCause();
+
+            sequense.add("top catch after assert");
+        }
+
+        assertThat(sequense).isEqualTo(List.of(
+                "top try",
+                "deep try",
+
+                "deep catch",
+                "deep catch after assert",
+                "deep finally",
+
+                "top catch",
+                "top catch after assert"
+        ));
     }
 }
