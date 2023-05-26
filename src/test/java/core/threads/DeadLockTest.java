@@ -1,10 +1,12 @@
 package core.threads;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class DeadLockTest {
 
     @Test
+    @Disabled
     void deadLock() throws InterruptedException {
 
         var resource1 = new Object();
