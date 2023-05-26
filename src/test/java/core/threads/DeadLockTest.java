@@ -13,7 +13,7 @@ class DeadLockTest {
         var resource2 = new Object();
 
         var thread1 = new Thread(() -> {
-            System.out.println("1: run");
+
             synchronized (resource1) {
                 sleep();
                 synchronized (resource2) {
@@ -23,11 +23,11 @@ class DeadLockTest {
         });
 
         var thread2 = new Thread(() -> {
-            System.out.println("2: run");
+
             synchronized (resource2) {
                 sleep();
                 synchronized (resource1) {
-                    System.out.println("2: block 2 inside");
+
                 }
             }
         });
