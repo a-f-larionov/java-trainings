@@ -3,7 +3,7 @@
 Java Trainings.<br>
 
 
-[Dead Lock](https://github.com/a-f-larionov/java-trainings/blob/main/src/test/java/core/threads/DeadLock.java)
+[Dead Lock](https://github.com/a-f-larionov/java-trainings/blob/main/src/test/java/core/threads/DeadLockTest.java)
 
 [Hash and Equals contract or Equivalence relation](https://github.com/a-f-larionov/java-trainings/blob/main/src/test/java/core/hashcode_n_equals/EqualsContractTest.java)
 
